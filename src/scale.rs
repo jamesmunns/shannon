@@ -18,11 +18,11 @@ pub enum Pitch {
     B,
 }
 
-impl Add<SemiTones> for Note {
+impl Add<Semitones> for Note {
     type Output = Note;
 
     #[allow(clippy::suspicious_arithmetic_impl)]
-    fn add(self, rhs: SemiTones) -> Self::Output {
+    fn add(self, rhs: Semitones) -> Self::Output {
         let pitch: u8 = self.pitch.into();
         let pitch: u32 = pitch.into();
         let pitch = pitch.wrapping_add(rhs.0);
@@ -122,7 +122,7 @@ impl Note {
 }
 
 #[derive(Debug, Clone, Copy)]
-pub struct SemiTones(pub u32);
+pub struct Semitones(pub u32);
 
 #[cfg(test)]
 mod tests {
@@ -148,10 +148,10 @@ mod tests {
     #[test]
     fn sanity_check_semitone() {
         let tests = [
-            (Pitch::C, SemiTones(0), Pitch::C),
-            (Pitch::C, SemiTones(12), Pitch::C),
-            (Pitch::C, SemiTones(1), Pitch::CSharp),
-            (Pitch::C, SemiTones(3), Pitch::DSharp),
+            (Pitch::C, Semitones(0), Pitch::C),
+            (Pitch::C, Semitones(12), Pitch::C),
+            (Pitch::C, Semitones(1), Pitch::CSharp),
+            (Pitch::C, Semitones(3), Pitch::DSharp),
         ];
 
         for (note, semis, exp_note) in tests {
@@ -179,118 +179,187 @@ mod tests {
 //
 // REF: https://en.wikipedia.org/wiki/Diatonic_scale#Theory
 // --------------------------
-pub const IONIAN_INTERVALS: &[SemiTones] = &[
-    SemiTones(0),
-    SemiTones(2),
-    SemiTones(4),
-    SemiTones(5),
-    SemiTones(7),
-    SemiTones(9),
-    SemiTones(11),
-    SemiTones(12),
+pub const IONIAN_INTERVALS: &[Semitones] = &[
+    Semitones(0),  // 1
+    Semitones(2),
+    Semitones(4),  // 3
+    Semitones(5),
+    Semitones(7),  // 5
+    Semitones(9),
+    Semitones(11), // 7
+    Semitones(12),
 ];
 
-pub const DORIAN_INTERVALS: &[SemiTones] = &[
-    SemiTones(0),
-    SemiTones(2),
-    SemiTones(3),
-    SemiTones(5),
-    SemiTones(7),
-    SemiTones(9),
-    SemiTones(10),
-    SemiTones(12),
+pub const DORIAN_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(2),
+    Semitones(3),
+    Semitones(5),
+    Semitones(7),
+    Semitones(9),
+    Semitones(10),
+    Semitones(12),
 ];
 
-pub const PHRYGIAN_INTERVALS: &[SemiTones] = &[
-    SemiTones(0),
-    SemiTones(1),
-    SemiTones(3),
-    SemiTones(5),
-    SemiTones(7),
-    SemiTones(8),
-    SemiTones(10),
-    SemiTones(12),
+pub const PHRYGIAN_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(1),
+    Semitones(3),
+    Semitones(5),
+    Semitones(7),
+    Semitones(8),
+    Semitones(10),
+    Semitones(12),
 ];
 
-pub const LYDIAN_INTERVALS: &[SemiTones] = &[
-    SemiTones(0),
-    SemiTones(2),
-    SemiTones(4),
-    SemiTones(6),
-    SemiTones(7),
-    SemiTones(9),
-    SemiTones(11),
-    SemiTones(12),
+pub const LYDIAN_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(2),
+    Semitones(4),
+    Semitones(6),
+    Semitones(7),
+    Semitones(9),
+    Semitones(11),
+    Semitones(12),
 ];
 
-pub const MIXOLYDIAN_INTERVALS: &[SemiTones] = &[
-    SemiTones(0),
-    SemiTones(2),
-    SemiTones(4),
-    SemiTones(5),
-    SemiTones(7),
-    SemiTones(9),
-    SemiTones(10),
-    SemiTones(12),
+pub const MIXOLYDIAN_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(2),
+    Semitones(4),
+    Semitones(5),
+    Semitones(7),
+    Semitones(9),
+    Semitones(10),
+    Semitones(12),
 ];
 
-pub const AEOLIAN_INTERVALS: &[SemiTones] = &[
-    SemiTones(0),
-    SemiTones(2),
-    SemiTones(3),
-    SemiTones(5),
-    SemiTones(7),
-    SemiTones(8),
-    SemiTones(10),
-    SemiTones(12),
+pub const AEOLIAN_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(2),
+    Semitones(3),
+    Semitones(5),
+    Semitones(7),
+    Semitones(8),
+    Semitones(10),
+    Semitones(12),
 ];
 
-pub const LOCRIAN_INTERVALS: &[SemiTones] = &[
-    SemiTones(0),
-    SemiTones(1),
-    SemiTones(3),
-    SemiTones(5),
-    SemiTones(6),
-    SemiTones(8),
-    SemiTones(10),
-    SemiTones(12),
+pub const LOCRIAN_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(1),
+    Semitones(3),
+    Semitones(5),
+    Semitones(6),
+    Semitones(8),
+    Semitones(10),
+    Semitones(12),
 ];
 
 // --------------------------
 // Other Scale Sequences
 // --------------------------
 
-pub const NATURAL_MINOR_INTERVALS: &[SemiTones] = AEOLIAN_INTERVALS;
+pub const NATURAL_MAJOR_INTERVALS: &[Semitones] = IONIAN_INTERVALS;
+pub const NATURAL_MINOR_INTERVALS: &[Semitones] = AEOLIAN_INTERVALS;
 
-pub const HARMONIC_MINOR_INTERVALS: &[SemiTones] = &[
-    SemiTones(0),
-    SemiTones(2),
-    SemiTones(3),
-    SemiTones(5),
-    SemiTones(7),
-    SemiTones(8),
-    SemiTones(11),
-    SemiTones(12),
+pub const HARMONIC_MINOR_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(2),
+    Semitones(3),
+    Semitones(5),
+    Semitones(7),
+    Semitones(8),
+    Semitones(11),
+    Semitones(12),
 ];
 
-pub const MELODIC_MINOR_ASCENDING_INTERVALS: &[SemiTones] = &[
-    SemiTones(0),
-    SemiTones(2),
-    SemiTones(3),
-    SemiTones(5),
-    SemiTones(7),
-    SemiTones(9),
-    SemiTones(11),
-    SemiTones(12),
+pub const MELODIC_MINOR_ASCENDING_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(2),
+    Semitones(3),
+    Semitones(5),
+    Semitones(7),
+    Semitones(9),
+    Semitones(11),
+    Semitones(12),
 ];
 
-pub const MELODIC_MINOR_DESCENDING_INTERVALS: &[SemiTones] = &[
-    SemiTones(12),
-    SemiTones(10),
-    SemiTones(8),
-    SemiTones(7),
-    SemiTones(5),
-    SemiTones(3),
-    SemiTones(2),
-    SemiTones(0),
+pub const MELODIC_MINOR_DESCENDING_INTERVALS: &[Semitones] = &[
+    Semitones(12),
+    Semitones(10),
+    Semitones(8),
+    Semitones(7),
+    Semitones(5),
+    Semitones(3),
+    Semitones(2),
+    Semitones(0),
+];
+
+// --------------------------
+// Chord sequences
+//
+// NOTE:
+//   https://www.bellandcomusic.com/chord-structure.html
+//   https://www.bellandcomusic.com/music-chords.html
+// --------------------------
+
+// Triads
+
+pub const MAJOR_TRIAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(4),
+    Semitones(7),
+];
+
+pub const MINOR_TRIAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(3),
+    Semitones(7),
+];
+
+pub const DIMINISHED_TRIAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(3),
+    Semitones(6),
+];
+
+pub const AUGMENTED_TRIAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(4),
+    Semitones(8),
+];
+
+// Tetrads
+
+pub const DOMINANT_TETRAD_INTERVALS: &[Semitones] = &[
+    // TODO
+];
+
+pub const MINOR_TETRAD_INTERVALS: &[Semitones] = &[
+    // TODO
+];
+
+pub const MAJOR_TETRAD_INTERVALS: &[Semitones] = &[
+    // TODO
+];
+
+pub const MINOR_MAJOR_TETRAD_INTERVALS: &[Semitones] = &[
+    // TODO
+];
+
+pub const AUGMENTED_TETRAD_INTERVALS: &[Semitones] = &[
+    // TODO
+];
+
+pub const AUGMENTED_MAJOR_TETRAD_INTERVALS: &[Semitones] = &[
+    // TODO
+];
+
+pub const DIMINISHED_TETRAD_INTERVALS: &[Semitones] = &[
+    // TODO
+];
+
+pub const DIMINISHED_HALF_TETRAD_INTERVALS: &[Semitones] = &[
+    // TODO
 ];
