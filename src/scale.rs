@@ -419,7 +419,7 @@ pub const EGYPTIAN_PENTATONIC_INTERVALS: &[Semitones] = &[
 ];
 
 /// ex: C, DSharp, F, GSharp, ASharp, C
-pub const BLUES_MINOR_INTERVALS: &[Semitones] = &[
+pub const BLUES_MINOR_PENTATONIC_INTERVALS: &[Semitones] = &[
     Semitones(0),
     Semitones(3),
     Semitones(5),
@@ -443,4 +443,54 @@ pub const MINOR_PENTATONIC_INTERVALS: &[Semitones] = &[
     Semitones(5),
     Semitones(7),
     Semitones(10),
+];
+
+
+/*
+# Chords
+
+NOTE: https://www.musictheoryacademy.com/understanding-music/primary-chords/
+
+## Primary Chords:
+
+* Always I, IV, V
+* Major Key:
+  * Primary chords are all major triads
+* Minor Key:
+  * I and IV are minor triads, V is major triad
+
+## Secondary Chords
+
+* II, III, VI
+* Major Key:
+   * Secondary chords are all minor triads
+* Minor Key:
+  * III and VI are minor triads, II is a diminished triad
+* Suggestions
+  * Start and end with I (primary)
+  * Use IV or V before the last I (all primary)
+*/
+
+pub const MAJOR_PRIMARY_CHORDS: &[(Semitones, &[Semitones])] = &[
+    (NATURAL_MAJOR_INTERVALS[0], MAJOR_TRIAD_INTERVALS), // I
+    (NATURAL_MAJOR_INTERVALS[3], MAJOR_TRIAD_INTERVALS), // IV
+    (NATURAL_MAJOR_INTERVALS[4], MAJOR_TRIAD_INTERVALS), // V
+];
+
+pub const MINOR_PRIMARY_CHORDS: &[(Semitones, &[Semitones])] = &[
+    (NATURAL_MINOR_INTERVALS[0], MINOR_TRIAD_INTERVALS), // I
+    (NATURAL_MINOR_INTERVALS[3], MINOR_TRIAD_INTERVALS), // IV
+    (NATURAL_MINOR_INTERVALS[4], MAJOR_TRIAD_INTERVALS), // V
+];
+
+pub const MAJOR_SECONDARY_CHORDS: &[(Semitones, &[Semitones])] = &[
+    (NATURAL_MAJOR_INTERVALS[1], MINOR_TRIAD_INTERVALS), // II
+    (NATURAL_MAJOR_INTERVALS[2], MINOR_TRIAD_INTERVALS), // III
+    (NATURAL_MAJOR_INTERVALS[5], MINOR_TRIAD_INTERVALS), // VI
+];
+
+pub const MINOR_SECONDARY_CHORDS: &[(Semitones, &[Semitones])] = &[
+    (NATURAL_MINOR_INTERVALS[1], DIMINISHED_TRIAD_INTERVALS), // II
+    (NATURAL_MINOR_INTERVALS[2], MINOR_TRIAD_INTERVALS),      // III
+    (NATURAL_MINOR_INTERVALS[5], MINOR_TRIAD_INTERVALS),      // VI
 ];

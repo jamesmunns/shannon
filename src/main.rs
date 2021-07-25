@@ -1,10 +1,10 @@
 pub mod scale;
 
-use std::fs::File;
-use std::io::BufReader;
 use std::time::Duration;
-use rodio::{Decoder, OutputStream, Sink};
+use rodio::{OutputStream, Sink};
 use rodio::source::{SineWave, Source};
+
+use crate::scale::Note;
 
 fn main() {
     let (_stream, stream_handle) = OutputStream::try_default().unwrap();
@@ -15,138 +15,45 @@ fn main() {
 
     std::thread::sleep(Duration::from_secs(1));
 
-    // for oct in [3, 5, 4].iter() {
-    //     for st in scale::AEOLIAN_INTERVALS {
-    //         let note = scale::Note {
-    //             pitch: scale::Pitch::ASharp,
-    //             octave: *oct,
-    //         };
-    //         let note = note + *st;
+    const BASE_CHORD: Note = Note { pitch: scale::Pitch::A, octave: 3 };
+    const BASE_MELODY: Note = Note { pitch: scale::Pitch::A, octave: 4 };
 
-    //         // Add a dummy source of the sake of the example.
-    //         let oct = if st.0 == 12 {
-    //             1
-    //         } else {
-    //             0
-    //         } + *oct;
+    loop {
+        for (base_semi, chord_semis) in scale::MINOR_PRIMARY_CHORDS.iter().cycle().take(4) {
+            let note_chord = BASE_CHORD + *base_semi;
+            let note_melody = BASE_MELODY + *base_semi;
 
-    //         let freq = note.freq_f32() as u32;
+            // Build chord on sink 2/3/4
+            println!("\nCHORD:");
+            for (st, sink) in chord_semis.iter().zip(&[&sink_2, &sink_3, &sink_4]) {
+                let note = note_chord + *st;
 
-    //         let source = SineWave::new(freq).take_duration(Duration::from_secs_f32(0.5)).amplify(0.20);
-    //         println!("{:?} {:?} {:?}", note, oct, freq);
-    //         sink.append(source);
+                let freq = note.freq_f32() as u32;
 
-    //         // The sound plays in a separate thread. This call will block the current thread until the sink
-    //         // has finished playing all its queued sounds.
-    //         sink.sleep_until_end();
-    //     }
+                let source = SineWave::new(freq).take_duration(Duration::from_secs_f32(2.0)).amplify(0.10);
+                println!("{:?} {:?} {:?}", note, 3, freq);
+                sink.append(source);
+            }
 
-    //     for st in scale::HARMONIC_MINOR_INTERVALS {
-    //         let note = scale::Note {
-    //             pitch: scale::Pitch::ASharp,
-    //             octave: *oct,
-    //         };
-    //         let note = note + *st;
+            // Melody - build on sink 1
+            println!("\nMelody:");
+            for st in chord_semis.iter().cycle().take(6) {
+                let note = note_melody + *st;
 
-    //         // Add a dummy source of the sake of the example.
-    //         let oct = if st.0 == 12 {
-    //             1
-    //         } else {
-    //             0
-    //         } + *oct;
+                let freq = note.freq_f32() as u32;
 
-    //         let freq = note.freq_f32() as u32;
+                let source = SineWave::new(freq).take_duration(Duration::from_secs_f32(0.33333)).amplify(0.20);
+                println!("{:?} {:?} {:?}", note, 3, freq);
+                sink_1.append(source);
+            }
 
-    //         let source = SineWave::new(freq).take_duration(Duration::from_secs_f32(0.5)).amplify(0.20);
-    //         println!("{:?} {:?} {:?}", note, oct, freq);
-    //         sink.append(source);
-
-    //         // The sound plays in a separate thread. This call will block the current thread until the sink
-    //         // has finished playing all its queued sounds.
-    //         sink.sleep_until_end();
-    //     }
-
-    //     for st in scale::MELODIC_MINOR_ASCENDING_INTERVALS {
-    //         let note = scale::Note {
-    //             pitch: scale::Pitch::ASharp,
-    //             octave: *oct,
-    //         };
-    //         let note = note + *st;
-
-    //         // Add a dummy source of the sake of the example.
-    //         let oct = if st.0 == 12 {
-    //             1
-    //         } else {
-    //             0
-    //         } + *oct;
-
-    //         let freq = note.freq_f32() as u32;
-
-    //         let source = SineWave::new(freq).take_duration(Duration::from_secs_f32(0.5)).amplify(0.20);
-    //         println!("{:?} {:?} {:?}", note, oct, freq);
-    //         sink.append(source);
-
-    //         // The sound plays in a separate thread. This call will block the current thread until the sink
-    //         // has finished playing all its queued sounds.
-    //         sink.sleep_until_end();
-    //     }
-
-    //     for st in scale::MELODIC_MINOR_DESCENDING_INTERVALS {
-    //         let note = scale::Note {
-    //             pitch: scale::Pitch::ASharp,
-    //             octave: *oct,
-    //         };
-    //         let note = note + *st;
-
-    //         // Add a dummy source of the sake of the example.
-    //         let oct = if st.0 == 12 {
-    //             1
-    //         } else {
-    //             0
-    //         } + *oct;
-
-    //         let freq = note.freq_f32() as u32;
-
-    //         let source = SineWave::new(freq).take_duration(Duration::from_secs_f32(0.5)).amplify(0.20);
-    //         println!("{:?} {:?} {:?}", note, oct, freq);
-    //         sink.append(source);
-
-    //         // The sound plays in a separate thread. This call will block the current thread until the sink
-    //         // has finished playing all its queued sounds.
-    //         sink.sleep_until_end();
-    //     }
-    //     println!("=-=-=-=-=-=-=-=-=")
-    // }
-
-
-    for note_semi in scale::PHRYGIAN_INTERVALS {
-        let note = scale::Note {
-            pitch: scale::Pitch::C,
-            octave: 4,
-        };
-        let note = note + *note_semi;
-
-        for (st, sink) in scale::MAJOR_TRIAD_INTERVALS.iter().zip(&[&sink_2, &sink_3, &sink_4]) {
-            let note = note + *st;
-
-            let freq = note.freq_f32() as u32;
-
-            let source = SineWave::new(freq).take_duration(Duration::from_secs_f32(1.0)).amplify(0.30);
-            println!("{:?} {:?} {:?}", note, 3, freq);
-            sink.append(source);
-        }
-
-        // The sound plays in a separate thread. This call will block the current thread until the sink
-        // has finished playing all its queued sounds.
-        for sink in &[&sink_2, &sink_3, &sink_4] {
-            sink.sleep_until_end();
+            // The sound plays in a separate thread. This call will block the current thread until the sink
+            // has finished playing all its queued sounds.
+            for sink in &[&sink_1, &sink_2, &sink_3, &sink_4] {
+                sink.sleep_until_end();
+            }
         }
     }
-
-
-
-
-    std::thread::sleep(Duration::from_secs(1));
 }
 
 
