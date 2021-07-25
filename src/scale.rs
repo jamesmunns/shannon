@@ -332,34 +332,113 @@ pub const AUGMENTED_TRIAD_INTERVALS: &[Semitones] = &[
 
 // Tetrads
 
-pub const DOMINANT_TETRAD_INTERVALS: &[Semitones] = &[
-    // TODO
+/// ex: C, E, G, ASharp
+pub const DOMINANT_7TH_TETRAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(4),
+    Semitones(7),
+    Semitones(10),
 ];
 
-pub const MINOR_TETRAD_INTERVALS: &[Semitones] = &[
-    // TODO
+/// ex: C, DSharp, G, ASharp
+pub const MINOR_7TH_TETRAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(3),
+    Semitones(7),
+    Semitones(10),
 ];
 
-pub const MAJOR_TETRAD_INTERVALS: &[Semitones] = &[
-    // TODO
+/// ex: C, E, G, B
+pub const MAJOR_7TH_TETRAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(4),
+    Semitones(7),
+    Semitones(11),
 ];
 
-pub const MINOR_MAJOR_TETRAD_INTERVALS: &[Semitones] = &[
-    // TODO
+/// ex: C, DSharp, G, B
+pub const MINOR_MAJOR_7TH_TETRAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(3),
+    Semitones(7),
+    Semitones(11),
 ];
 
-pub const AUGMENTED_TETRAD_INTERVALS: &[Semitones] = &[
-    // TODO
+/// ex: C, E, GSharp, ASharp
+pub const AUGMENTED_7TH_TETRAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(4),
+    Semitones(8),
+    Semitones(10),
 ];
 
-pub const AUGMENTED_MAJOR_TETRAD_INTERVALS: &[Semitones] = &[
-    // TODO
+/// ex: C, E, GSharp, B
+pub const AUGMENTED_MAJOR_7TH_TETRAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(4),
+    Semitones(8),
+    Semitones(11),
 ];
 
-pub const DIMINISHED_TETRAD_INTERVALS: &[Semitones] = &[
-    // TODO
+/// ex: C, DSharp, FSharp, A
+pub const DIMINISHED_7TH_TETRAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(3),
+    Semitones(6),
+    Semitones(9),
 ];
 
-pub const DIMINISHED_HALF_TETRAD_INTERVALS: &[Semitones] = &[
-    // TODO
+/// ex: C, DSharp, FSharp, ASharp
+pub const DIMINISHED_HALF_7TH_TETRAD_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(3),
+    Semitones(6),
+    Semitones(10),
+];
+
+// https://en.wikipedia.org/wiki/Pentatonic_scale
+
+/// ex: C, D, E, G, A, C
+pub const MAJOR_PENTATONIC_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(2),
+    Semitones(4),
+    Semitones(7),
+    Semitones(9),
+];
+
+/// ex: C, D, F, G, ASharp, C
+pub const EGYPTIAN_PENTATONIC_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(2),
+    Semitones(5),
+    Semitones(7),
+    Semitones(10),
+];
+
+/// ex: C, DSharp, F, GSharp, ASharp, C
+pub const BLUES_MINOR_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(3),
+    Semitones(5),
+    Semitones(8),
+    Semitones(10),
+];
+
+/// ex: C, D, F, G, A, C
+pub const BLUES_MAJOR_PENTATONIC_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(2),
+    Semitones(5),
+    Semitones(7),
+    Semitones(9),
+];
+
+/// ex: C, DSharp, F, G, ASharp, C
+pub const MINOR_PENTATONIC_INTERVALS: &[Semitones] = &[
+    Semitones(0),
+    Semitones(3),
+    Semitones(5),
+    Semitones(7),
+    Semitones(10),
 ];
