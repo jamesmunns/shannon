@@ -396,7 +396,9 @@ pub const DIMINISHED_HALF_7TH_TETRAD_INTERVALS: &[Semitones] = &[
     Semitones(10),
 ];
 
-// https://en.wikipedia.org/wiki/Pentatonic_scale
+// Pentatonics
+//
+// NOTE: https://en.wikipedia.org/wiki/Pentatonic_scale
 
 /// ex: C, D, E, G, A, C
 pub const MAJOR_PENTATONIC_INTERVALS: &[Semitones] = &[

@@ -1,4 +1,4 @@
-# Shannon
+# Claude and the Shannons
 
 An entropy-based session band
 
