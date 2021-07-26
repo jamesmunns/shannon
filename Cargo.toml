@@ -11,6 +11,7 @@ bbqueue = "0.4.12"
 toml = "0.5.8"
 heapless = "0.7.0"
 rand_chacha = "0.3.1"
+rand = "0.8.4"
 
 [dependencies.serde]
 version = "1.0.125"
