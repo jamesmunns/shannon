@@ -179,6 +179,7 @@ mod tests {
 //
 // REF: https://en.wikipedia.org/wiki/Diatonic_scale#Theory
 // --------------------------
+// MAJOR
 pub const IONIAN_INTERVALS: &[Semitones] = &[
     Semitones(0),  // 1
     Semitones(2),
@@ -190,6 +191,7 @@ pub const IONIAN_INTERVALS: &[Semitones] = &[
     Semitones(12),
 ];
 
+// MINOR
 pub const DORIAN_INTERVALS: &[Semitones] = &[
     Semitones(0),
     Semitones(2),
@@ -201,6 +203,7 @@ pub const DORIAN_INTERVALS: &[Semitones] = &[
     Semitones(12),
 ];
 
+// MINOR
 pub const PHRYGIAN_INTERVALS: &[Semitones] = &[
     Semitones(0),
     Semitones(1),
@@ -212,6 +215,7 @@ pub const PHRYGIAN_INTERVALS: &[Semitones] = &[
     Semitones(12),
 ];
 
+// MAJOR
 pub const LYDIAN_INTERVALS: &[Semitones] = &[
     Semitones(0),
     Semitones(2),
@@ -223,6 +227,7 @@ pub const LYDIAN_INTERVALS: &[Semitones] = &[
     Semitones(12),
 ];
 
+// MAJOR
 pub const MIXOLYDIAN_INTERVALS: &[Semitones] = &[
     Semitones(0),
     Semitones(2),
@@ -234,6 +239,7 @@ pub const MIXOLYDIAN_INTERVALS: &[Semitones] = &[
     Semitones(12),
 ];
 
+// MINOR
 pub const AEOLIAN_INTERVALS: &[Semitones] = &[
     Semitones(0),
     Semitones(2),
@@ -245,6 +251,7 @@ pub const AEOLIAN_INTERVALS: &[Semitones] = &[
     Semitones(12),
 ];
 
+// MINOR-ISH
 pub const LOCRIAN_INTERVALS: &[Semitones] = &[
     Semitones(0),
     Semitones(1),
