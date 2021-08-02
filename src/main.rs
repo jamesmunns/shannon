@@ -189,7 +189,7 @@ fn main() {
 
     // if rng.gen() {
     // if true {
-    if false {
+    if true {
         // MINOR
         chord_choices.extend_from_slice(MINOR_PRIMARY_CHORDS);
         chord_weights.push(8);
@@ -283,31 +283,6 @@ fn main() {
         for sink in &[&sink_1, &sink_2, &sink_3, &sink_4] {
             sink.sleep_until_end();
         }
-
-        // for _ in 0..4 {
-        //     println!("Bar!");
-        //     let (pitch, chords) = chord_choices[chord_weights_idx.sample(&mut rng)];
-        //     let pitch = gen_chord(&mut chord_oct, pitch, chords, [&sink_2, &sink_3, &sink_4]);
-
-        //     let bar = if let Some(bar) = keep_bar.take() {
-        //         bar
-        //     } else {
-        //         one_bar_melody(&mut melod_oct, &sink_1, scale, [pitch; 4])
-        //     };
-
-        //     bar.gen_notes(&sink_1);
-
-        //     if rng.gen_range(0..2) == 0 {
-        //         println!("Keep!");
-        //         keep_bar = Some(bar);
-        //     }
-
-        //     // The sound plays in a separate thread. This call will block the current thread until the sink
-        //     // has finished playing all its queued sounds.
-        //     for sink in &[&sink_1, &sink_2, &sink_3, &sink_4] {
-        //         sink.sleep_until_end();
-        //     }
-        // }
     }
 }
 
@@ -320,7 +295,7 @@ fn main() {
 fn gen_chord(oct: &mut u8, semi: Semitones, chords: &[Semitones], sinks: [&Sink; 3]) -> Pitch {
     let mut rng = thread_rng();
     *oct = (((*oct as i8) + rng.gen_range(-1..=1)) as u8).max(3).min(5);
-    let note: Note = Note { pitch: Pitch::C, octave: *oct } + semi;
+    let note: Note = Note { pitch: Pitch::A, octave: *oct } + semi;
 
     for (st, sink) in chords.iter().zip(sinks.iter()) {
         if rng.gen::<u8>() < 64u8 {
